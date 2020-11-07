@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccess\" />
     <Folder Include="wwwroot\" />
     <Folder Include="Services\" />
   </ItemGroup>
@@ -13,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="15.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>

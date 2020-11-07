@@ -24,6 +24,8 @@ namespace EveryBodyCodes
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,6 +35,13 @@ namespace EveryBodyCodes
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Camera API");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseMvc();
         }
