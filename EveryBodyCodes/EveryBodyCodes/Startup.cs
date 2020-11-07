@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EveryBodyCodes.Configurations;
+using EveryBodyCodes.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,7 +27,10 @@ namespace EveryBodyCodes
         {
             services.AddMvc();
 
+            services.Configure<CameraConfiguration>(Configuration.GetSection("Camera"));
             services.AddSwaggerGen();
+
+            services.AddScoped<ICameraCSVDataAccess, CameraCSVDataAccess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

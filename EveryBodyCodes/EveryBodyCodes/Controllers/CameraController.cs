@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EveryBodyCodes.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class CameraController : Controller
     {
         // GET api/values
         [HttpGet]
