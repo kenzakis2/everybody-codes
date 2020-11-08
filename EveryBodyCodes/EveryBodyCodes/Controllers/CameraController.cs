@@ -3,42 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using EveryBodyCodes.Services;
+using EveryBodyCodes.Models;
 
 namespace EveryBodyCodes.Controllers
 {
     [Route("api/[controller]")]
     public class CameraController : Controller
     {
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public ICameraService _cameraService;
+
+        public CameraController(ICameraService cameraService)
         {
-            return new string[] { "value1", "value2" };
+            _cameraService = cameraService;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("listed")]
+        public IEnumerable<CameraData> GetAll()
         {
-            return "value";
+            return _cameraService.SearchByCameraName("");
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpGet("listed/{name}")]
+        public IEnumerable<CameraData> Get(string name)
         {
+            return _cameraService.SearchByCameraName(name);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpGet("formatted")]
+        public IEnumerable<List<CameraData>> GetAllFormatted()
         {
+            return _cameraService.SearchByCameraNameFormatted("");
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet("formatted/{name}")]
+        public IEnumerable<List<CameraData>> GetFormatted(string name)
         {
+            return _cameraService.SearchByCameraNameFormatted(name);
         }
     }
 }

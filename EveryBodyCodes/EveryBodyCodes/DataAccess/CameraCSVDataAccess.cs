@@ -2,6 +2,7 @@
 using EveryBodyCodes.Models;
 using Microsoft.Extensions.Options;
 using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using System.IO;
 
 namespace EveryBodyCodes.DataAccess
 {
-    public class CameraCSVDataAccess : ICameraCSVDataAccess
+    public class CameraCSVDataAccess : ICameraDataAccess
     {
         private readonly CameraConfiguration cameraConfiguration;
 
@@ -19,6 +20,10 @@ namespace EveryBodyCodes.DataAccess
             cameraConfiguration = options.Value;
         }
 
+        /// <summary>
+        /// Reading all the data from CSV
+        /// </summary>
+        /// <returns>List of Camera Data</returns>
         public List<CameraData> ReadAllData()
         {
             var result = new List<CameraData>();
@@ -26,6 +31,8 @@ namespace EveryBodyCodes.DataAccess
             {
                 using (var file = new CsvReader(reader, System.Globalization.CultureInfo.CurrentCulture))
                 {
+                    file.Configuration.Delimiter = ";";
+                    file.Configuration.MissingFieldFound = null;
                     file.Read();
                     file.ReadHeader();
                     while (file.Read())
@@ -36,12 +43,34 @@ namespace EveryBodyCodes.DataAccess
                             Latitude = file.GetField("Latitude"),
                             Longitude = file.GetField("Longitude")
                         };
-                        result.Add(record);
+
+                        if (!record.Name.ToLower().StartsWith("error"))
+                        {
+                            record.Number = GetCameraNumber(record.Name);
+                            result.Add(record);
+                        }
+                        else
+                        {
+                            //TODO: Log reading error
+                        }
                     }
                 }
             }
 
             return result;
+        }
+
+        private int GetCameraNumber(string CameraName)
+        {
+            var pattern = @"UTR-CM-(\d+)";
+            var match = Regex.Match(CameraName, pattern);
+            if (match.Success)
+            {
+                var numPart = match.Groups[1];
+                return int.Parse(numPart.Value);
+            }
+
+            return -1;
         }
     }
 }
