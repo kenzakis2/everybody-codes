@@ -6,6 +6,10 @@ namespace EveryBodyCodes.DataAccess
 {
     public interface ICameraDataAccess
     {
+        /// <summary>
+        /// Reading All Data
+        /// </summary>
+        /// <returns>List of CameraData records</returns>
         Task<List<CameraData>> ReadAllData();
     }
 }

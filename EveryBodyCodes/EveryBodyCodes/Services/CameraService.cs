@@ -16,6 +16,11 @@ namespace EveryBodyCodes.Services
             _cameraDataAccess = cameraDataAccess;
         }
 
+        /// <summary>
+        /// Searching records by camera name
+        /// </summary>
+        /// <param name="CameraName">string contained in the name field. if empty, all records will be returned.</param>
+        /// <returns>Matching camera data records</returns>
         public async Task<List<CameraData>> SearchByCameraName(string CameraName)
         {
             var baseList = await _cameraDataAccess.ReadAllData();
@@ -26,6 +31,11 @@ namespace EveryBodyCodes.Services
             return baseList.Where(e => e.Name.Contains(CameraName)).ToList();
         }
 
+        /// <summary>
+        /// Search and format Camera Records according to business rule
+        /// </summary>
+        /// <param name="CameraName">string contained in the name field. if empty, all records will be returned.</param>
+        /// <returns>Matching camera data records in 4 Lists.</returns>
         public async Task<List<List<CameraData>>> SearchByCameraNameFormatted(string CameraName)
         {
             var column1 = new List<CameraData>();
