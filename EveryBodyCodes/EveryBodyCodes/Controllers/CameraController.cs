@@ -19,27 +19,27 @@ namespace EveryBodyCodes.Controllers
         }
 
         [HttpGet("listed")]
-        public IEnumerable<CameraData> GetAll()
+        public async Task<IEnumerable<CameraData>> GetAll()
         {
-            return _cameraService.SearchByCameraName("");
+            return await _cameraService.SearchByCameraName("");
         }
 
         [HttpGet("listed/{name}")]
-        public IEnumerable<CameraData> Get(string name)
+        public async Task<IEnumerable<CameraData>> Get(string name)
         {
-            return _cameraService.SearchByCameraName(name);
+            return await _cameraService.SearchByCameraName(name);
         }
 
         [HttpGet("formatted")]
-        public IEnumerable<List<CameraData>> GetAllFormatted()
+        public async Task<IEnumerable<List<CameraData>>> GetAllFormatted()
         {
-            return _cameraService.SearchByCameraNameFormatted("");
+            return await _cameraService.SearchByCameraNameFormatted("");
         }
 
         [HttpGet("formatted/{name}")]
-        public IEnumerable<List<CameraData>> GetFormatted(string name)
+        public async Task<IEnumerable<List<CameraData>>> GetFormatted(string name)
         {
-            return _cameraService.SearchByCameraNameFormatted(name);
+            return await _cameraService.SearchByCameraNameFormatted(name);
         }
     }
 }

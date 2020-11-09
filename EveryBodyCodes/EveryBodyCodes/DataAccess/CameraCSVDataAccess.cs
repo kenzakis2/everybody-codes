@@ -24,7 +24,7 @@ namespace EveryBodyCodes.DataAccess
         /// Reading all the data from CSV
         /// </summary>
         /// <returns>List of Camera Data</returns>
-        public List<CameraData> ReadAllData()
+        public async Task<List<CameraData>> ReadAllData()
         {
             var result = new List<CameraData>();
             using (var reader = new StreamReader(cameraConfiguration.CSVAddress))
@@ -35,7 +35,7 @@ namespace EveryBodyCodes.DataAccess
                     file.Configuration.MissingFieldFound = null;
                     file.Read();
                     file.ReadHeader();
-                    while (file.Read())
+                    while (await file.ReadAsync())
                     {
                         var record = new CameraData
                         {

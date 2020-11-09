@@ -16,9 +16,9 @@ namespace EveryBodyCodes.Services
             _cameraDataAccess = cameraDataAccess;
         }
 
-        public List<CameraData> SearchByCameraName(string CameraName)
+        public async Task<List<CameraData>> SearchByCameraName(string CameraName)
         {
-            var baseList = _cameraDataAccess.ReadAllData();
+            var baseList = await _cameraDataAccess.ReadAllData();
 
             if (string.IsNullOrEmpty(CameraName))
                 return baseList;
@@ -26,14 +26,14 @@ namespace EveryBodyCodes.Services
             return baseList.Where(e => e.Name.Contains(CameraName)).ToList();
         }
 
-        public List<List<CameraData>> SearchByCameraNameFormatted(string CameraName)
+        public async Task<List<List<CameraData>>> SearchByCameraNameFormatted(string CameraName)
         {
             var column1 = new List<CameraData>();
             var column2 = new List<CameraData>();
             var column3 = new List<CameraData>();
             var column4 = new List<CameraData>();
 
-            var baseList = SearchByCameraName(CameraName);
+            var baseList = await SearchByCameraName(CameraName);
 
             foreach (var item in baseList)
             {

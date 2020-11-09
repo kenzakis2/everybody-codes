@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using EveryBodyCodes.Models;
 
 namespace EveryBodyCodes.Services
 {
     public interface ICameraService
     {
-        List<CameraData> SearchByCameraName(string CameraName);
-        List<List<CameraData>> SearchByCameraNameFormatted(string CameraName);
+        Task<List<CameraData>> SearchByCameraName(string CameraName);
+        Task<List<List<CameraData>>> SearchByCameraNameFormatted(string CameraName);
     }
 }
